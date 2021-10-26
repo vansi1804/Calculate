@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ATMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountCode" />
+    </Key>
+    <Property Name="AccountCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccountNumber" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Pass_word" Type="char" MaxLength="6" Nullable="false" />
+    <Property Name="Balance" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Withdraw">
+    <Key>
+      <PropertyRef Name="WithdrawCode" />
+    </Key>
+    <Property Name="WithdrawCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WithdrawDate" Type="date" Nullable="false" />
+    <Property Name="WithdrawAmount" Type="int" Nullable="false" />
+    <Property Name="AccountCode" Type="int" />
+  </EntityType>
+  <Association Name="FK__Withdraw__Accoun__25869641">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="Withdraw" Type="Self.Withdraw" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccountCode" />
+      </Principal>
+      <Dependent Role="Withdraw">
+        <PropertyRef Name="AccountCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ATMModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Withdraw" EntityType="Self.Withdraw" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Withdraw__Accoun__25869641" Association="Self.FK__Withdraw__Accoun__25869641">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Withdraw" EntitySet="Withdraw" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
